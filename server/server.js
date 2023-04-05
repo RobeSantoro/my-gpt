@@ -24,7 +24,8 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
   try {
-    const prompt = req.body.prompt;
+    const messages = req.body.messages;
+    console.log(messages);
 
     // const response = await openai.createCompletion({
     //   model: "text-davinci-003",
@@ -37,10 +38,8 @@ app.post('/', async (req, res) => {
     // });
 
     const completion = await openai.createChatCompletion({
-      model: "gpt-4",
-      messages: [
-        {role: "system", content: "You are a helpful assistant."},
-        {role: "user", content: prompt}],
+      model: "gpt-3.5-turbo",
+      messages: messages,
     });
 
     console.log(completion.data);

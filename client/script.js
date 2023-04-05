@@ -70,6 +70,17 @@ const handleSubmit = async (e) => {
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
+    // Create the messages array
+    const messages = [{role: "system", content: "You are a helpful assistant."}];
+
+    // Add all the messages from chatContainer to the messages array
+    chatContainer.querySelectorAll('.message').forEach((message) => {
+        messages.push({
+            role: message.id.startsWith('id') ? 'assistant' : 'user',
+            content: message.innerText.trim(),
+        });
+    });
+
     // to clear the textarea input 
     form.reset()
 
@@ -85,42 +96,33 @@ const handleSubmit = async (e) => {
 
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
+    
+    // console.log(messages);
 
-    // Create the messages array
-    const messages = [];
+    const response = await fetch('http://localhost:5000', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            messages: messages
+        })
+    })
 
-    // Add all the messages inside the chatContainer\
-    // if is a message from the user, add the role as user
-    // if is a message from the bot, add the role as assistant
-    chatContainer.querySelectorAll('.message').forEach((message) => {
-        console.log(message.innerText)
-    });
+    clearInterval(loadInterval)
+    messageDiv.innerHTML = " "
 
+    if (response.ok) {
+        const data = await response.json();
+        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-    // const response = await fetch('http://localhost:5000', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         prompt: chatContainer.innerText
-    //     })
-    // })
+        typeText(messageDiv, parsedData)
+    } else {
+        const err = await response.text()
 
-    // clearInterval(loadInterval)
-    // messageDiv.innerHTML = " "
-
-    // if (response.ok) {
-    //     const data = await response.json();
-    //     const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
-
-    //     typeText(messageDiv, parsedData)
-    // } else {
-    //     const err = await response.text()
-
-    //     messageDiv.innerHTML = "Something went wrong"
-    //     alert(err)
-    // }
+        messageDiv.innerHTML = "Something went wrong"
+        alert(err)
+    }
 }
 
 form.addEventListener('submit', handleSubmit)
