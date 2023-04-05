@@ -86,30 +86,41 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://my-gpt-3s17.onrender.com', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            prompt: data.get('prompt')
-        })
-    })
+    // Create the messages array
+    const messages = [];
 
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
+    // Add all the messages inside the chatContainer\
+    // if is a message from the user, add the role as user
+    // if is a message from the bot, add the role as assistant
+    chatContainer.querySelectorAll('.message').forEach((message) => {
+        console.log(message.innerText)
+    });
 
-    if (response.ok) {
-        const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData)
-    } else {
-        const err = await response.text()
+    // const response = await fetch('http://localhost:5000', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         prompt: chatContainer.innerText
+    //     })
+    // })
 
-        messageDiv.innerHTML = "Something went wrong"
-        alert(err)
-    }
+    // clearInterval(loadInterval)
+    // messageDiv.innerHTML = " "
+
+    // if (response.ok) {
+    //     const data = await response.json();
+    //     const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+
+    //     typeText(messageDiv, parsedData)
+    // } else {
+    //     const err = await response.text()
+
+    //     messageDiv.innerHTML = "Something went wrong"
+    //     alert(err)
+    // }
 }
 
 form.addEventListener('submit', handleSubmit)
