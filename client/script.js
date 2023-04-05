@@ -34,8 +34,6 @@ function typeText(element, text) {
 }
 
 // generate unique ID for each message div of bot
-// necessary for typing text effect for that specific reply
-// without unique ID, typing text will work on every element
 function generateUniqueId() {
     const timestamp = Date.now();
     const randomNumber = Math.random();
@@ -68,10 +66,10 @@ const handleSubmit = async (e) => {
     const data = new FormData(form)
 
     // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    chatContainer.innerHTML += chatStripe(false, data.get('message'))
 
     // Create the messages array
-    const messages = [{role: "system", content: "You are a helpful assistant."}];
+    const messages = [{ role: "system", content: "You are a helpful assistant." }];
 
     // Add all the messages from chatContainer to the messages array
     chatContainer.querySelectorAll('.message').forEach((message) => {
@@ -96,10 +94,10 @@ const handleSubmit = async (e) => {
 
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
-    
+
     // console.log(messages);
 
-    const response = await fetch('http://localhost:5000', {
+    const response = await fetch('https://my-gpt-3s17.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -114,7 +112,7 @@ const handleSubmit = async (e) => {
 
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+        const parsedData = data.ai.trim() // trims any trailing spaces/'\n' 
 
         typeText(messageDiv, parsedData)
     } else {
@@ -127,7 +125,9 @@ const handleSubmit = async (e) => {
 
 form.addEventListener('submit', handleSubmit)
 form.addEventListener('keyup', (e) => {
-    if (e.keyCode === 13) {
+
+    // If CTRL + ENTER is pressed
+    if (e.key === 'Enter' && e.ctrlKey) {
         handleSubmit(e)
     }
 })
