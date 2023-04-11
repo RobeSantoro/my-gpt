@@ -27,7 +27,7 @@ app.post('/', async (req, res) => {
     const messages = req.body.messages;
 
     const ChatCompletion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: messages,
     });
 
