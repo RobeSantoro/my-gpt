@@ -35,8 +35,7 @@
   padding: 8px 12px;
   border-radius: 12px;
   background-color: #6f6f6f;
-  word-wrap: break-word;
-  max-width: 60%;
+
 }
 
 form {
@@ -54,7 +53,7 @@ form {
 .sendButton {
   background-color: #007bff;
   color: #fff;
-  border: none;
+  border: solid;
   padding: 8px 12px;
   cursor: pointer;
 }

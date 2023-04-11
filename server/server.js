@@ -43,6 +43,6 @@ app.post('/', async (req, res) => {
   }
 })
 
-app.listen(5000, () => console.log('AI server started on https://my-gpt-3s17.onrender.com'))
+app.listen(5000, () => console.log('AI server started on port 5000'))
 
 console.clear()
