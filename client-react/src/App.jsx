@@ -8,30 +8,34 @@ import Message from './components/Message';
 import Drawer from './components/Drawer';
 
 function App() {
-    const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
 
-    return (
-        <div className="drawer drawer-mobile">
+  return (
+    <div className="drawer">
 
-            <input id="chats-drawer" type="checkbox" className="drawer-toggle" />
+      <input id="chats-drawer" type="checkbox" className="drawer-toggle" />
 
-            <div className="flex flex-col drawer-content">
+      <div className="flex flex-col drawer-content">
 
-                <label htmlFor="chats-drawer" className="btn btn-primary drawer-button">Open drawer</label>
+        <label htmlFor="chats-drawer" className="btn drawer-button">Chat Database</label>
 
-                <div className="chatContainer">
-                    {messages.map((message, index) => (
-                        <Message key={index} message={message} botImg={bot} userImg={user} className="chat-bubble " />
-                    ))}
-                </div>
-
-                <ChatForm messages={messages} setMessages={setMessages} />
-
-            </div>
-
-            <Drawer />
+        <div className="chatContainer">
+          {messages.map((message, index) => (
+            <Message key={index} message={message} botImg={bot} userImg={user} className="chat-bubble" />
+          ))}
         </div>
-    );
+
+        <ChatForm
+          messages={messages}
+          setMessages={setMessages}
+          className="min-h-2"
+        />
+
+      </div>
+      <Drawer className="" />
+
+    </div>
+  );
 }
 
 export default App;
