@@ -5,6 +5,7 @@ import Avatar from './Avatar'
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
+  const [full_name, setFull_name] = useState(null)
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
 
@@ -15,7 +16,7 @@ export default function Account({ session }) {
 
       let { data, error } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username, full_name, website, avatar_url`)
         .eq('id', user.id)
         .single()
 
@@ -23,6 +24,7 @@ export default function Account({ session }) {
         console.warn(error)
       } else if (data) {
         setUsername(data.username)
+        setFull_name(data.full_name)
         setWebsite(data.website)
         setAvatarUrl(data.avatar_url)
       }
@@ -42,6 +44,7 @@ export default function Account({ session }) {
     const updates = {
       id: user.id,
       username,
+      full_name,
       website,
       avatar_url,
       updated_at: new Date(),
@@ -77,6 +80,15 @@ export default function Account({ session }) {
           required
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="full_name">Full Name</label>
+        <input
+          id="full_name"
+          type="text"
+          value={full_name || ''}
+          onChange={(e) => setFull_name(e.target.value)}
         />
       </div>
       <div>
