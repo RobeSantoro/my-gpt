@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {supabase} from './supabaseClient.js'
+import { supabase } from './supabaseClient.js'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -22,7 +22,7 @@ export default function Auth() {
   return (
     <div className="flex row flex-center">
       <div className="col-6 form-widget">
-        <h1 className="header">Supabase + React</h1>
+        <h1 className="text-3xl font-bold underline">My GPT</h1>
         <p className="description">Sign in via magic link with your email below</p>
         <form className="form-widget" onSubmit={handleLogin}>
           <div>
