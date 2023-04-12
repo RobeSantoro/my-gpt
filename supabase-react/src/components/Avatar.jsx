@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from './supabaseClient.js'
+import { supabase } from '../supabaseClient.js'
 
 export default function Avatar({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
@@ -50,20 +50,24 @@ export default function Avatar({ url, size, onUpload }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col place-items-center place-content-center" >
+
+      {/* IMAGE */}
       {avatarUrl ? (
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image"
+          className="rounded-full avatar image"
           style={{ height: size, width: size }}
         />
       ) : (
-        <div className="avatar no-image" style={{ height: size, width: size }} />
+        <div className="" style={{ height: size, width: size }} />
       )}
-      <div style={{ width: size }}>
-        <label className="block button primary" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Upload'}
+
+      {/* UPLOAD BUTTON */}
+
+        <label className="mx-2 btn btn-link" htmlFor="single">
+          {uploading ? 'Uploading ...' : 'Cambia Foto'}
         </label>
         <input
           style={{
@@ -76,7 +80,8 @@ export default function Avatar({ url, size, onUpload }) {
           onChange={uploadAvatar}
           disabled={uploading}
         />
-      </div>
+
+
     </div>
   )
 }

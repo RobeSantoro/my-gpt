@@ -1,8 +1,7 @@
-import './App.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient.js'
-import Auth from './Auth'
-import Account from './Account'
+import Auth from './components/Auth.jsx'
+import Account from './components/Account.jsx'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -18,7 +17,7 @@ function App() {
   }, [])
 
   return (
-    <div className="container" style={{ padding: '50px 0 100px 0' }}>
+    <div className="flex flex-col h-screen align-middle place-items-center bg-base-300">
       {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
     </div>
   )
