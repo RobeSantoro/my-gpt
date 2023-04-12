@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient.js'
 
-export default function Avatar({ url, size, onUpload }) {
+export default function Avatar({ url, size, onUpload, thumbnail }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -66,20 +66,28 @@ export default function Avatar({ url, size, onUpload }) {
 
       {/* UPLOAD BUTTON */}
 
-        <label className="mx-2 btn btn-link" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Cambia Foto'}
-        </label>
-        <input
-          style={{
-            visibility: 'hidden',
-            position: 'absolute',
-          }}
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
+      {thumbnail ? (null) : (
+        <>
+          <label className="mx-2 btn btn-link" htmlFor="single">
+            {uploading ? 'Uploading ...' : 'Cambia Foto'}
+          </label>
+
+          <input
+            style={{
+              visibility: 'hidden',
+              position: 'absolute',
+            }}
+            type="file"
+            id="single"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
+        </>
+      )
+      }
+
+
 
 
     </div>
