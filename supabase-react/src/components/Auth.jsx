@@ -41,10 +41,10 @@ export default function Auth() {
         <p className="py-6">Registrati con il link magico</p>
 
         {/* LOGIN MAGIC LINK */}
-        <form className="" onSubmit={handleLogin}>
+        <form className="w-full" onSubmit={handleLogin}>
 
             <input
-              className="w-full input input-bordered input-primary"
+              className="w-full max-w-md text-black bg-white input input-bordered input-primary"
               type="email"
               placeholder="Your email"
               value={email}
@@ -52,7 +52,7 @@ export default function Auth() {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <button className="w-full my-1 btn btn-primary" disabled={loading}>
+            <button className="w-full max-w-md my-1 btn btn-primary" disabled={loading}>
               {loading ? <span>Caricamento</span> : <span>Ottieni il link magico</span>}
             </button>
 
@@ -62,7 +62,7 @@ export default function Auth() {
         {/* LOGIN OAUTH GOOGLE */}
 
         <button
-          className="w-full my-1 btn btn-secondary "
+          className="w-full max-w-md my-1 btn btn-secondary "
           onClick={handleLoginGoogle}
         >
           Usa Google Account
@@ -70,7 +70,7 @@ export default function Auth() {
 
         {/* LOGIN OAUTH DISCORD */}
         <button
-          className="w-full btn btn-accent"
+          className="w-full max-w-md btn btn-accent"
           onClick={handleLoginDiscord}
         >
           Usa Discord Account
