@@ -18,7 +18,7 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Hello from My GPT!'
+    message: 'Hello from My GPT-4!'
   })
 })
 
@@ -27,7 +27,7 @@ app.post('/', async (req, res) => {
     const messages = req.body.messages;
 
     const ChatCompletion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo", //gpt-4
       messages: messages,
     });
 
@@ -43,6 +43,6 @@ app.post('/', async (req, res) => {
   }
 })
 
-app.listen(5000, () => console.log('AI server started on https://my-gpt-3s17.onrender.com'))
+app.listen(5000, () => console.log('AI server started on port 5000'))
 
 console.clear()
