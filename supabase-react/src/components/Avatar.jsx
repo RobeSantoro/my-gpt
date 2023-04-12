@@ -68,7 +68,7 @@ export default function Avatar({ url, size, onUpload, thumbnail }) {
 
       {thumbnail ? (null) : (
         <>
-          <label className="mx-2 btn btn-link" htmlFor="single">
+          <label className="mx-2 text-white btn btn-link" htmlFor="single">
             {uploading ? 'Uploading ...' : 'Cambia Foto'}
           </label>
 

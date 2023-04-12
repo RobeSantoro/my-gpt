@@ -9,7 +9,16 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["cmyk", "night"],
-    darkTheme: "night",
+    themes: [
+      {
+      mytheme: {
+        primary: "green",
+        secondary: "white",
+        accent: 'red',
+        neutral: "white",
+        "base-100": "#063f73",
+        "base-content": "white"
+      },
+    }],
   },
 };

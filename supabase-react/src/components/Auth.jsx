@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { supabase } from '../supabaseClient.js'
 
+import bot from '../assets/bot.svg'
+
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
@@ -33,13 +35,14 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen px-6 hero bg-base-200">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold">Mio GPT</h1>
+      <div className="flex flex-col items-center text-center ">
+        <img src={bot} alt="" className="w-20" />
+        <h1 className="text-3xl font-bold text-white">Il Mio Trasformatore Generativo Precedentemente Addestrato</h1>
         <p className="py-6">Registrati con il link magico</p>
 
         {/* LOGIN MAGIC LINK */}
         <form className="" onSubmit={handleLogin}>
-          <div>
+
             <input
               className="w-full input input-bordered input-primary"
               type="email"
@@ -48,19 +51,18 @@ export default function Auth() {
               required={true}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
-          <div>
-            <button className="w-full my-2 btn btn-primary" disabled={loading}>
+
+            <button className="w-full my-1 btn btn-primary" disabled={loading}>
               {loading ? <span>Caricamento</span> : <span>Ottieni il link magico</span>}
             </button>
-          </div>
+
         </form>
 
         <p className="py-6">oppure</p>
         {/* LOGIN OAUTH GOOGLE */}
 
         <button
-          className="w-full my-1 btn btn-accent"
+          className="w-full my-1 btn btn-secondary "
           onClick={handleLoginGoogle}
         >
           Usa Google Account
@@ -68,7 +70,7 @@ export default function Auth() {
 
         {/* LOGIN OAUTH DISCORD */}
         <button
-          className="w-full btn btn-secondary"
+          className="w-full btn btn-accent"
           onClick={handleLoginDiscord}
         >
           Usa Discord Account

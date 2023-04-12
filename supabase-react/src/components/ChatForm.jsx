@@ -52,22 +52,26 @@ function ChatForm({ messages, setMessages }) {
   };
 
   return (
-    <form
-      className="flex"
-      onSubmit={handleSubmit}
-    >
-      <textarea
-        className="w-full"
-        name="message"
-        value={messageInput}
-        onChange={(e) => setMessageInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ctrl + Enter to send..."
-      />
-      <button type="submit" className="h-auto btn btn-primary">
-        Send
-      </button>
-    </form>
+
+      <form
+        onSubmit={handleSubmit}
+        className="box-border"
+      >
+        <div className="absolute bottom-0 w-full ">
+          <div className='flex justify-between w-full'>
+            <textarea
+              className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
+              name="message"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ctrl + Enter to send..."
+            />
+            <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
+          </div>
+        </div>
+      </form>
+
   );
 }
 
