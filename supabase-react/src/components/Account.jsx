@@ -66,7 +66,8 @@ export default function Account({ session }) {
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
           </label>
           <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-            <li><a>Nuova Conversazione</a></li>
+            {/* The button to open modal */}
+            <li><label htmlFor="chat-modal" >Nuova Conversazione</label></li>
             <li><a>Conversazioni Salvate</a></li>
             <li><a>Informazioni Privacy</a></li>
           </ul>
@@ -215,8 +216,19 @@ export default function Account({ session }) {
       </div>
 
       {/* MODAL CHAT */}
-      
+      <input type="checkbox" id="chat-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="w-full h-screen modal-box">
+          <label htmlFor="chat-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
 
+        </div>
+      </div>
+
+      <div>
+        <input type="checkbox" id="chat-modal" className="modal-toggle" />
+
+
+      </div>
 
       {/* FOOTER */}
       {/* <div className="btm-nav">
