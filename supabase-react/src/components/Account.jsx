@@ -68,7 +68,7 @@ export default function Account({ session }) {
           <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
             <li><a>Nuova Conversazione</a></li>
             <li><a>Conversazioni Salvate</a></li>
-            <li><a>Informazioni</a></li>
+            <li><a>Informazioni Privacy</a></li>
           </ul>
         </div>
 
@@ -78,6 +78,7 @@ export default function Account({ session }) {
 
         <div className="flex-none">
 
+          {/* SHOPPING CART */}
           {/* <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
@@ -94,7 +95,8 @@ export default function Account({ session }) {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
+          */}
 
           {/* MINI AVATAR DROPDOWN */}
           <div className="dropdown dropdown-end">
@@ -110,12 +112,12 @@ export default function Account({ session }) {
               <li>
                 <a className="justify-between">
                   Compra Crediti
-                  {/* <span className="badge">New</span> */}
+                  <span className="badge">13</span>
                 </a>
               </li>
               <li>
                 {/* The button to open modal */}
-                <label htmlFor="my-modal" >Impostazioni Profilo</label>
+                <label htmlFor="settings-modal" >Impostazioni Profilo</label>
               </li>
 
               <li>
@@ -131,7 +133,7 @@ export default function Account({ session }) {
 
 
       {/* MODAL SETTINGS */}
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <input type="checkbox" id="settings-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
 
@@ -139,7 +141,7 @@ export default function Account({ session }) {
 
             <Avatar
               url={avatar_url}
-              size={200}
+              size={150}
               onUpload={(event, url) => {
                 setAvatarUrl(url)
                 updateProfile(event)
@@ -152,7 +154,7 @@ export default function Account({ session }) {
               </label>
               <input id="email" type="text" value={session.user.email}
                 disabled
-                className="w-full input input-bordered input-primary" />
+                className="w-full input input-bordered" />
             </div>
 
             <div>
@@ -198,8 +200,8 @@ export default function Account({ session }) {
 
             <div className="modal-action">
 
-              {/* <label htmlFor="my-modal" className="btn">Cancel</label> */}
-              <label htmlFor="my-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
+              {/* <label htmlFor="settings-modal" className="btn">Cancel</label> */}
+              <label htmlFor="settings-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
 
               <button type="submit" disabled={loading} className="w-full btn btn-primary">
                 {loading ? ' ...' : 'Aggiorna'}
@@ -212,8 +214,12 @@ export default function Account({ session }) {
         </div>
       </div>
 
+      {/* MODAL CHAT */}
+      
+
+
       {/* FOOTER */}
-      <div className="btm-nav">
+      {/* <div className="btm-nav">
         <button>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
           <span className="btm-nav-label">Home</span>
@@ -226,7 +232,7 @@ export default function Account({ session }) {
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
           <span className="btm-nav-label">Statics</span>
         </button>
-      </div>
+      </div> */}
 
     </div>
   )
