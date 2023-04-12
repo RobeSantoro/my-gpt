@@ -1,6 +1,12 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
 import { supabase } from '../supabaseClient.js'
-import Avatar from './Avatar.jsx'
+import Avatar from './Avatar'
+
+import ChatForm from './ChatForm'
+import Message from './Message'
+
+import bot from '../assets/bot.svg';
+import user from '../assets/user.svg';
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
@@ -8,6 +14,8 @@ export default function Account({ session }) {
   const [full_name, setFull_name] = useState(null)
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     async function getProfile() {
@@ -59,15 +67,19 @@ export default function Account({ session }) {
   }
 
   return (
-    <div className="container bg-base-100">
-      <div className=" rounded-b-3xl navbar bg-base-100">
+    <div className="container bg-base-100 rounded-b-2xl">
+
+      {/* NAVBAR */}
+      <div className="navbar bg-primary-content rounded-b-3xl">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
           </label>
           <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-            {/* The button to open modal */}
+
+            {/* TOGGLE NEW CONVERSATION */}
             <li><label htmlFor="chat-modal" >Nuova Conversazione</label></li>
+
             <li><a>Conversazioni Salvate</a></li>
             <li><a>Informazioni Privacy</a></li>
           </ul>
@@ -80,7 +92,7 @@ export default function Account({ session }) {
         <div className="flex-none">
 
           {/* SHOPPING CART */}
-          {/* <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -97,7 +109,7 @@ export default function Account({ session }) {
               </div>
             </div>
           </div>
-          */}
+
 
           {/* MINI AVATAR DROPDOWN */}
           <div className="dropdown dropdown-end">
@@ -116,8 +128,9 @@ export default function Account({ session }) {
                   <span className="badge">13</span>
                 </a>
               </li>
+
               <li>
-                {/* The button to open modal */}
+                {/* TOGGLE PROFILE SETTINGS */}
                 <label htmlFor="settings-modal" >Impostazioni Profilo</label>
               </li>
 
@@ -132,7 +145,6 @@ export default function Account({ session }) {
         </div>
       </div>
 
-
       {/* MODAL SETTINGS */}
       <input type="checkbox" id="settings-modal" className="modal-toggle" />
       <div className="modal">
@@ -142,7 +154,7 @@ export default function Account({ session }) {
 
             <Avatar
               url={avatar_url}
-              size={150}
+              size={100}
               onUpload={(event, url) => {
                 setAvatarUrl(url)
                 updateProfile(event)
@@ -151,7 +163,7 @@ export default function Account({ session }) {
 
             <div>
               <label htmlFor="email" className="label">
-                <span className="label-text-alt">Email</span>
+                <span className="label-text-alt">Posta Elettronica</span>
               </label>
               <input id="email" type="text" value={session.user.email}
                 disabled
@@ -160,7 +172,7 @@ export default function Account({ session }) {
 
             <div>
               <label htmlFor="username" className="label">
-                <span className="label-text-alt">Username</span>
+                <span className="label-text-alt">Nome Utente</span>
               </label>
               <input
                 id="username"
@@ -174,7 +186,7 @@ export default function Account({ session }) {
 
             <div>
               <label htmlFor="full_name" className="label">
-                <span className="label-text-alt">Full name</span>
+                <span className="label-text-alt">Nome e Cognome</span>
 
               </label>
               <input
@@ -188,7 +200,7 @@ export default function Account({ session }) {
 
             <div>
               <label htmlFor="website" className="label">
-                <span className="label-text-alt">Website</span>
+                <span className="label-text-alt">Sito Web</span>
               </label>
               <input
                 id="website"
@@ -205,7 +217,7 @@ export default function Account({ session }) {
               <label htmlFor="settings-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
 
               <button type="submit" disabled={loading} className="w-full btn btn-primary">
-                {loading ? ' ...' : 'Aggiorna'}
+                {loading ? ' ...' : 'Salva'}
               </button>
 
             </div>
@@ -218,8 +230,25 @@ export default function Account({ session }) {
       {/* MODAL CHAT */}
       <input type="checkbox" id="chat-modal" className="modal-toggle" />
       <div className="modal">
+
         <div className="w-full h-screen modal-box">
+          <h2>Titolo Chat</h2>
           <label htmlFor="chat-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
+
+          {/* CHAT CONTAINER */}
+          <div className="chatContainer">
+            {messages.map((message, index) => (
+              <Message
+                key={index}
+                message={message}
+                botImg={bot}
+                userImg={user}
+                />
+            ))}
+          </div>
+
+
+          <ChatForm messages={messages} setMessages={setMessages} />
 
         </div>
       </div>

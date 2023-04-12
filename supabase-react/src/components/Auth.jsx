@@ -51,7 +51,7 @@ export default function Auth() {
           </div>
           <div>
             <button className="w-full my-2 btn btn-primary" disabled={loading}>
-              {loading ? <span>Loading</span> : <span>Ottieni il lik magico</span>}
+              {loading ? <span>Caricamento</span> : <span>Ottieni il link magico</span>}
             </button>
           </div>
         </form>
