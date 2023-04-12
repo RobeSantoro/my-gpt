@@ -18,7 +18,7 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Hello from My GPT!'
+    message: 'Hello from My GPT-4!'
   })
 })
 
@@ -27,7 +27,7 @@ app.post('/', async (req, res) => {
     const messages = req.body.messages;
 
     const ChatCompletion = await openai.createChatCompletion({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo", //gpt-4
       messages: messages,
     });
 
