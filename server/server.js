@@ -25,9 +25,10 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
   try {
     const messages = req.body.messages;
+    const model = req.body.model
 
     const ChatCompletion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo", //gpt-4
+      model: model,
       messages: messages,
     });
 
