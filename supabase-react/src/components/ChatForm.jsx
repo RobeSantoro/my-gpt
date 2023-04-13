@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+const isDebug = import.meta.env.DEBUG
+const renderComUrl = import.meta.env.RENDER_COM_URL
+const localhost = import.meta.env.LOCALHOST_URL
+
 function ChatForm({ messages, setMessages }) {
   const [messageInput, setMessageInput] = useState('');
 
@@ -20,9 +24,16 @@ function ChatForm({ messages, setMessages }) {
     // clear the textarea input
     setMessageInput('');
 
+    console.log('isDebug', isDebug);
+    console.log('renderComUrl', renderComUrl);
+    console.log('localhost', localhost);
+
+    url_to_fetch = `${isDebug ? localhost : renderComUrl}`
+    console.log('url_to_fetch', url_to_fetch);
+
     // Fetch chat response and set messages
     try {
-      const response = await fetch('https://my-gpt-3s17.onrender.com', {
+      const response = await fetch(url_to_fetch, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,24 +64,24 @@ function ChatForm({ messages, setMessages }) {
 
   return (
 
-      <form
-        onSubmit={handleSubmit}
-        className="box-border"
-      >
-        <div className="absolute bottom-0 w-full ">
-          <div className='flex justify-between w-full'>
-            <textarea
-              className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
-              name="message"
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ctrl + Enter to send..."
-            />
-            <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
-          </div>
+    <form
+      onSubmit={handleSubmit}
+      className="box-border"
+    >
+      <div className="absolute bottom-0 w-full ">
+        <div className='flex justify-between w-full'>
+          <textarea
+            className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
+            name="message"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ctrl + Enter to send..."
+          />
+          <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
         </div>
-      </form>
+      </div>
+    </form>
 
   );
 }
