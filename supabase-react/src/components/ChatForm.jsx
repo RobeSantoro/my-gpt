@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 function ChatForm({ messages, setMessages }) {
   const [messageInput, setMessageInput] = useState('');
 
@@ -18,14 +19,23 @@ function ChatForm({ messages, setMessages }) {
     // clear the textarea input
     setMessageInput('');
 
+    const apiUrl = import.meta.env.VITE_DEBUG ? (
+      import.meta.env.VITE_LOCALHOST_URL
+    ) : (
+      import.meta.env.VITE_RENDERCOM_URL
+    )
+
+    console.log(apiUrl);
+
     // Fetch chat response and set messages
     try {
-      const response = await fetch('https://my-gpt-3s17.onrender.com', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          model: 'gpt-3.5-turbo', //gpt-4 //gpt-3.5-turbo
           messages: updatedMessages,
         }),
       });
@@ -51,24 +61,24 @@ function ChatForm({ messages, setMessages }) {
 
   return (
 
-      <form
-        onSubmit={handleSubmit}
-        className="box-border"
-      >
-        <div className="absolute bottom-0 w-full ">
-          <div className='flex justify-between w-full'>
-            <textarea
-              className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
-              name="message"
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ctrl + Enter to send..."
-            />
-            <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
-          </div>
+    <form
+      onSubmit={handleSubmit}
+      className="box-border"
+    >
+      <div className="absolute bottom-0 w-full ">
+        <div className='flex justify-between w-full'>
+          <textarea
+            className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
+            name="message"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ctrl + Enter to send..."
+          />
+          <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
         </div>
-      </form>
+      </div>
+    </form>
 
   );
 }
