@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-function ChatForm({ messages, setMessages }) {
+function ChatForm({ messages, setMessages, className }) {
   const [messageInput, setMessageInput] = useState('');
 
   const handleSubmit = async (e) => {
@@ -27,7 +27,7 @@ function ChatForm({ messages, setMessages }) {
 
     console.log(apiUrl);
 
-    // Fetch chat response and set messages
+    // Fetch the response from the API
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -35,14 +35,14 @@ function ChatForm({ messages, setMessages }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', //gpt-4 //gpt-3.5-turbo
+          model: 'gpt-3.5-turbo', //gpt-4 //gpt-3.5-turbo THE SELECT HAS TO BE IMPLEMENTED
           messages: updatedMessages,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        const parsedData = data.ai.trim(); // trims any trailing spaces/'\n'
+        // const parsedData = data.ai.trim(); // trims any trailing spaces/'\n'
         setMessages([...messages, { role: 'user', content: messageInput }, { role: 'assistant', content: parsedData }]);
       } else {
         const err = await response.text();
@@ -61,24 +61,40 @@ function ChatForm({ messages, setMessages }) {
 
   return (
 
-    <form
-      onSubmit={handleSubmit}
-      className="box-border"
-    >
-      <div className="absolute bottom-0 w-full ">
-        <div className='flex justify-between w-full'>
-          <textarea
-            className="w-full h-24 m-1 text-black bg-white textarea textarea-secondary"
-            name="message"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ctrl + Enter to send..."
-          />
-          <button type="submit" className="h-auto m-1 btn btn-primary">Invia</button>
+    <div className={className}>
+
+      <div className='stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl'>
+        <div className='relative flex flex-col flex-grow w-full mx-2 rounded-md sm:mx-4'>
+          <form onSubmit={handleSubmit}>
+
+            <textarea
+              className="w-full h-24 m-1 text-black bg-white md:py-3 md:pl-10 textarea textarea-secondary" // w-full h-24 m-1 text-black  textarea textarea-secondary
+              name="message"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ctrl + Enter to send..."
+            />
+          </form>
+
+          <div className='flex flex-row'>
+            <select className=" select select-primary">
+              <option disabled selected>MODEL</option>
+              <option>gpt-3.5-turbo</option>
+              <option>gpt-4</option>
+            </select>
+
+            <button type="submit"
+              className="btn btn-primary"  // h-auto m-1 btn btn-primary
+            >
+              Invia
+            </button>
+          </div>
+
         </div>
       </div>
-    </form>
+    </div>
+
 
   );
 }
