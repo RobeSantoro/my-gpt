@@ -9,6 +9,8 @@ function ChatForm({ messages, setMessages, className }) {
     e.preventDefault();
 
     if (!messageInput) return;
+    const chatContainer = document.getElementById('chat-container');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
     const updatedMessages = [
       { role: 'system', content: 'You are a helpful assistant, your name is GPT-4. You say "Sir" at the beginning of every answer.' },
@@ -75,7 +77,7 @@ function ChatForm({ messages, setMessages, className }) {
             <textarea
               className="w-full h-24 m-1 text-black bg-white md:py-2 md:pl-5 textarea textarea-secondary" // w-full h-24 m-1 text-black  textarea textarea-secondary
               name="message"
-              value={messageInput}
+              value={messageInput.replace(/  +/g, '\n')}
               onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ctrl + Enter to send..."
