@@ -33,6 +33,7 @@ app.post('/', async (req, res) => {
     });
 
     console.log(ChatCompletion.data);
+    console.log('message:', ChatCompletion.data.choices[0].message);
 
     res.status(200).send({
       ai: ChatCompletion.data.choices[0].message.content
