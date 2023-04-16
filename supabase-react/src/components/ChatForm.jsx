@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 function ChatForm({ messages, setMessages, className }) {
   const [messageInput, setMessageInput] = useState('');
   const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo');
+  const [systemInstruction, setSystemInstruction] = useState('You are a helpful assistant, your name is My GPT. You say "Sir" at the beginning of every answer.')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +14,7 @@ function ChatForm({ messages, setMessages, className }) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
     const updatedMessages = [
-      { role: 'system', content: 'You are a helpful assistant, your name is GPT-4. You say "Sir" at the beginning of every answer.' },
+      { role: 'system', content: systemInstruction },
       ...messages,
       { role: 'user', content: messageInput }];
 
@@ -66,30 +67,49 @@ function ChatForm({ messages, setMessages, className }) {
     setSelectedModel(e.target.value);
   };
 
+  const handleSystemInstructionChange = (e) => {
+    setSystemInstruction(e.target.value)
+  }
+
   return (
 
     <div className={className}>
 
-      <div className='stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto'>
+      <div className='stretch flex flex-row gap-3 '>
         <div className='relative flex flex-col flex-grow w-full mx-2 rounded-md sm:mx-4'>
           <form onSubmit={handleSubmit}>
 
             <textarea
-              className="w-full h-24 m-1 text-black bg-white md:py-2 md:pl-5 textarea textarea-secondary" // w-full h-24 m-1 text-black  textarea textarea-secondary
+              className="w-full h-24 text-black bg-white textarea textarea-secondary px-2 py-1"
               name="message"
               value={messageInput.replace(/  +/g, '\n')}
               onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ctrl + Enter to send..."
             />
-            <div className='flex flex-row'>
-              <select className="select select-primary" value={selectedModel} onChange={handleModelChange}>
+
+            <div className='flex flex-row gap-1'>
+
+              <input type="text"
+                className='rounded-lg w-full px-2 text-black'
+                value={systemInstruction}
+                onChange={handleSystemInstructionChange}
+                placeholder='System Instruction'
+              />
+
+              <select
+                className="select select-primary"
+                value={selectedModel}
+                onChange={handleModelChange}
+              >
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
                 <option value="gpt-4">gpt-4</option>
               </select>
+
               <button type="submit" className="btn btn-primary">
                 Invia
               </button>
+
             </div>
           </form>
         </div>
