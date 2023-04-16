@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Message from './Message'
 
-function Chat({username,avatar_url}) {
+function Chat({ username, avatar_url, lastMessages, setLastMessages }) {
 
-  const [messages, setMessages] = useState([]);
+  const saveLastMessages = (messages) => {
+    localStorage.setItem('messages', JSON.stringify(messages));
+  };
+
+  const [messages, setMessages] = useState(lastMessages);
+
+  useEffect(() => {
+    setMessages(lastMessages);
+  }, [lastMessages]);
 
   const [messageInput, setMessageInput] = useState('');
   const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo');
   const [systemInstruction, setSystemInstruction] = useState('You are a helpful assistant, your name is My GPT. You say "Sir" at the beginning of every answer.')
+
+  const handleModelChange = (e) => {
+    setSelectedModel(e.target.value);
+  };
+
+  const handleSystemInstructionChange = (e) => {
+    setSystemInstruction(e.target.value)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,8 +62,12 @@ function Chat({username,avatar_url}) {
 
       if (response.ok) {
         const data = await response.json();
-        const parsedData = data.ai // .trim() any trailing spaces/'\n'
-        setMessages([...messages, { role: 'user', content: messageInput }, { role: 'assistant', content: parsedData }]);
+        const parsedData = data.ai
+
+        const newMessages = [...messages, { role: 'user', content: messageInput }, { role: 'assistant', content: parsedData }];
+        setMessages(newMessages);
+        saveLastMessages(newMessages);
+
       } else {
         const err = await response.text();
         alert(err);
@@ -63,30 +83,6 @@ function Chat({username,avatar_url}) {
       handleSubmit(e);
     }
   };
-
-  const handleModelChange = (e) => {
-    setSelectedModel(e.target.value);
-  };
-
-  const handleSystemInstructionChange = (e) => {
-    setSystemInstruction(e.target.value)
-  }
-
-  function loadMessagesFromLocalStorage() {
-    const savedMessages = localStorage.getItem('messages') ? localStorage.getItem('messages') : localStorage.getItem('messages')
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
-    }
-  }
-
-  useEffect(() => {
-    loadMessagesFromLocalStorage();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('messages', JSON.stringify(messages));
-  }, [messages]);
-
 
   return (
 

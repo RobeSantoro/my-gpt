@@ -6,6 +6,19 @@ import Chat from './Chat'
 
 function Account({ session }) {
 
+  const loadLastChatMessages = () => {
+    const storedMessages = localStorage.getItem('messages');
+    return storedMessages ? JSON.parse(storedMessages) : [];
+  };
+
+  const createNewConversation = () => {
+    localStorage.removeItem('messages');
+    setLastMessages([]);
+    document.activeElement.blur()
+  };
+
+  const [lastMessages, setLastMessages] = useState(loadLastChatMessages());
+
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [full_name, setFull_name] = useState(null)
@@ -77,8 +90,10 @@ function Account({ session }) {
 
             <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
 
-              {/* TOGGLE NEW CONVERSATION */}
-              <li><label htmlFor="chat-modal">Nuova Conversazione</label></li>
+              {/* NEW CONVERSATION */}
+              <li onClick={createNewConversation}>
+                <a>Nuova Conversazione</a>
+              </li>
 
               <li><a>Conversazioni Salvate</a></li>
               <li><a>Informazioni Privacy</a></li>
@@ -209,7 +224,12 @@ function Account({ session }) {
           </div>
         </div>
 
-        <Chat username={username} avatar_url={avatar_url} />
+        <Chat
+          username={username}
+          avatar_url={avatar_url}
+          lastMessages={lastMessages}
+          setLastMessages={setLastMessages}
+        />
 
       </div>
     </div >
