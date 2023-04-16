@@ -1,19 +1,16 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient.js'
 import Avatar from './Avatar'
 
-import ChatForm from './ChatForm'
-import Message from './Message'
+import Chat from './Chat'
 
-export default function Account({ session }) {
+function Account({ session }) {
 
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [full_name, setFull_name] = useState(null)
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     async function getProfile() {
@@ -212,32 +209,14 @@ export default function Account({ session }) {
           </div>
         </div>
 
-        {/* CHAT CONTAINER */}
-        <div className='mb-3 mx-2 ' >
-          <div id='chat-container' className='mb-3 '>
-            {messages.map((message, index) => (
-
-              <Message
-                key={index}
-                message={message}
-                username={username}
-                avatar_url={avatar_url}
-              />
-
-            ))}
-          </div>
-
-          <ChatForm
-            messages={messages}
-            setMessages={setMessages}
-          />
-
-        </div>
+        <Chat username={username} avatar_url={avatar_url} />
 
       </div>
     </div >
   )
 }
+
+export default Account;
 
 
 {/* SHOPPING CART */ }
