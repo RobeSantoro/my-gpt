@@ -213,22 +213,25 @@ export default function Account({ session }) {
         </div>
 
         {/* CHAT CONTAINER */}
-        <div className='mb-3 ' >
+        <div className='mb-3 mx-2 ' >
           <div id='chat-container' className='mb-3 '>
             {messages.map((message, index) => (
+
               <Message
                 key={index}
                 message={message}
                 username={username}
                 avatar_url={avatar_url}
               />
+
             ))}
           </div>
+
           <ChatForm
-            className=""
             messages={messages}
             setMessages={setMessages}
           />
+
         </div>
 
       </div>

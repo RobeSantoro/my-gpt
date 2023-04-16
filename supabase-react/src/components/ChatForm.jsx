@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 
-function ChatForm({ messages, setMessages, className }) {
+function ChatForm({ messages, setMessages }) {
+
   const [messageInput, setMessageInput] = useState('');
   const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo');
   const [systemInstruction, setSystemInstruction] = useState('You are a helpful assistant, your name is My GPT. You say "Sir" at the beginning of every answer.')
@@ -10,8 +11,6 @@ function ChatForm({ messages, setMessages, className }) {
     e.preventDefault();
 
     if (!messageInput) return;
-    const chatContainer = document.getElementById('chat-container');
-    chatContainer.scrollTop = chatContainer.scrollHeight;
 
     const updatedMessages = [
       { role: 'system', content: systemInstruction },
@@ -19,9 +18,6 @@ function ChatForm({ messages, setMessages, className }) {
       { role: 'user', content: messageInput }];
 
     setMessages([...messages, { role: 'user', content: messageInput }]);
-
-    // clear the textarea input
-    setMessageInput('');
 
     const apiUrl = import.meta.env.VITE_DEBUG_SERVER == 'true' ? (
       import.meta.env.VITE_LOCALHOST_URL
@@ -55,6 +51,9 @@ function ChatForm({ messages, setMessages, className }) {
     } catch (error) {
       alert('Error:', error);
     }
+
+    // clear the textarea input
+    setMessageInput('');
   };
 
   const handleKeyDown = (e) => {
@@ -73,48 +72,46 @@ function ChatForm({ messages, setMessages, className }) {
 
   return (
 
-    <div className={className}>
+    <div className='stretch flex flex-row gap-3 '>
+      <div className='relative flex flex-col flex-grow w-full rounded-md '>
+        <form onSubmit={handleSubmit}>
 
-      <div className='stretch flex flex-row gap-3 '>
-        <div className='relative flex flex-col flex-grow w-full mx-2 rounded-md sm:mx-4'>
-          <form onSubmit={handleSubmit}>
+          <textarea
+            className="w-full h-24 text-black bg-white textarea textarea-secondary px-2 py-1"
+            name="message"
+            value={messageInput.replace(/  +/g, '\n')}
+            onChange={(e) => setMessageInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ctrl + Enter to send..."
+          />
 
-            <textarea
-              className="w-full h-24 text-black bg-white textarea textarea-secondary px-2 py-1"
-              name="message"
-              value={messageInput.replace(/  +/g, '\n')}
-              onChange={(e) => setMessageInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ctrl + Enter to send..."
+          <div className='flex flex-row gap-1'>
+
+            <input type="text"
+              className='rounded-lg w-full px-2 text-black'
+              value={systemInstruction}
+              onChange={handleSystemInstructionChange}
+              placeholder='System Instruction'
             />
 
-            <div className='flex flex-row gap-1'>
+            <select
+              className="select select-primary"
+              value={selectedModel}
+              onChange={handleModelChange}
+            >
+              <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+              <option value="gpt-4">gpt-4</option>
+            </select>
 
-              <input type="text"
-                className='rounded-lg w-full px-2 text-black'
-                value={systemInstruction}
-                onChange={handleSystemInstructionChange}
-                placeholder='System Instruction'
-              />
+            <button type="submit" className="btn btn-primary">
+              Invia
+            </button>
 
-              <select
-                className="select select-primary"
-                value={selectedModel}
-                onChange={handleModelChange}
-              >
-                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
-                <option value="gpt-4">gpt-4</option>
-              </select>
-
-              <button type="submit" className="btn btn-primary">
-                Invia
-              </button>
-
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
+
   );
 }
 
