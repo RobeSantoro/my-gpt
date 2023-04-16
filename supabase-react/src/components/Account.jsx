@@ -6,6 +6,8 @@ import Chat from './Chat'
 
 function Account({ session }) {
 
+  const [conversationTitle, setconversationTitle] = useState('Mio GPT')
+
   const loadLastChatMessages = () => {
     const storedMessages = localStorage.getItem('messages');
     return storedMessages ? JSON.parse(storedMessages) : [];
@@ -18,7 +20,7 @@ function Account({ session }) {
   };
 
   const openJSONConversation = () => {
-    
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'application/json';
@@ -48,7 +50,7 @@ function Account({ session }) {
     const link = document.createElement('a');
 
     link.href = url;
-    link.download = 'conversation.json';
+    link.download = `${conversationTitle}.json`;
     link.click();
 
     setTimeout(() => {
@@ -121,9 +123,9 @@ function Account({ session }) {
 
         {/* NAVBAR */}
         <div className="navbar bg-primary">
-          <div className="dropdown">
 
-            {/* LEFT MENU */}
+          {/* LEFT MENU */}
+          <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
             </label>
@@ -146,7 +148,7 @@ function Account({ session }) {
 
           {/* CENTERD TITLE */}
           <div className="flex-1 place-content-center">
-            <h2 className="text-2xl normal-case ">Mio GPT</h2>
+            <h2 className="text-2xl normal-case ">{conversationTitle}</h2>
           </div>
 
           {/* RIGHT MENU */}
