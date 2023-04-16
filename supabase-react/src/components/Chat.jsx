@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Message from './Message'
 
-function Chat({ username, avatar_url, lastMessages, setLastMessages }) {
+function Chat({ username, avatar_url, lastMessages }) {
 
   const saveLastMessages = (messages) => {
     localStorage.setItem('messages', JSON.stringify(messages));

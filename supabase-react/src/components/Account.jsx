@@ -17,6 +17,46 @@ function Account({ session }) {
     document.activeElement.blur()
   };
 
+  const openJSONConversation = () => {
+    
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+
+    input.onchange = async (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const messages = JSON.parse(event.target.result);
+        setLastMessages(messages);
+        localStorage.setItem('messages', JSON.stringify(messages));
+      };
+
+      reader.readAsText(file);
+    };
+
+    input.click();
+
+  }
+
+  const saveJSONConversation = () => {
+
+    const data = JSON.stringify(lastMessages, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'conversation.json';
+    link.click();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 100);
+
+  }
+
   const [lastMessages, setLastMessages] = useState(loadLastChatMessages());
 
   const [loading, setLoading] = useState(true)
@@ -95,8 +135,12 @@ function Account({ session }) {
                 <a>Nuova Conversazione</a>
               </li>
 
-              <li><a>Conversazioni Salvate</a></li>
-              <li><a>Informazioni Privacy</a></li>
+              <li onClick={openJSONConversation}>
+                <a>Apri Conversazione</a></li>
+
+              <li onClick={saveJSONConversation}>
+                <a>Salva Conversazione</a></li>
+              {/* <li><a>Informazioni Privacy</a></li> */}
             </ul>
           </div>
 
@@ -228,7 +272,6 @@ function Account({ session }) {
           username={username}
           avatar_url={avatar_url}
           lastMessages={lastMessages}
-          setLastMessages={setLastMessages}
         />
 
       </div>
