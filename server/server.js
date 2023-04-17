@@ -18,7 +18,7 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Hello from My GPT-4!'
+    message: 'Hello from Mio GPT'
   })
 })
 
@@ -33,6 +33,7 @@ app.post('/', async (req, res) => {
     });
 
     console.log(ChatCompletion.data);
+    console.log('message:', ChatCompletion.data.choices[0].message);
 
     res.status(200).send({
       ai: ChatCompletion.data.choices[0].message.content

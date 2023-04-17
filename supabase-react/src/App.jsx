@@ -17,7 +17,7 @@ function App() {
   }, [])
 
   return (
-    <div className="flex flex-col h-screen align-middle place-items-center bg-base-300">
+    <div className="flex flex-col h-screen align-middle place-items-center">
       {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
     </div>
   )
