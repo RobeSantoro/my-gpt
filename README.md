@@ -22,7 +22,8 @@ Starting from the scaffold by JS Mastery from [this YouTube tutorial](https://ww
 
 ![Mio GPT Screenshots](screenshot/screens.png)
 
-The server runs on Render.com, and the client on Vercel at
-[my-gpt-ruby.vercel.app](my-gpt-ruby.vercel.app). If it is not working, I shut down the server to save money.
+The server runs on Render.com and the client on Vercel at:
+[https://my-gpt-ruby.vercel.app/](https://my-gpt-ruby.vercel.app/)
+If it is not working, I shut down the server to save money.
 
 If you want to see a better implementation, check out [this repo](https://github.com/mckaywrigley/chatbot-ui) by McKay Wrigley.
