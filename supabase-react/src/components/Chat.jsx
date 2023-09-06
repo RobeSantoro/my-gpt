@@ -86,7 +86,7 @@ function Chat({ username, avatar_url, lastMessages }) {
 
   return (
 
-    <div id='chat' className='mb-3 mx-2'>
+    <div id='chat' className='mx-2 mb-3'>
       <div id='chat-container' className='mb-3 '>
         {messages.map((message, index) => (
 
@@ -101,12 +101,12 @@ function Chat({ username, avatar_url, lastMessages }) {
       </div>
 
       {/* FORM */}
-      <div className='stretch flex flex-row gap-3 '>
+      <div className='flex flex-row gap-3 stretch '>
         <div className='relative flex flex-col flex-grow w-full rounded-md '>
           <form onSubmit={handleSubmit}>
 
             <textarea
-              className="w-full h-24 text-black bg-white textarea textarea-secondary px-2 py-1"
+              className="w-full h-24 px-2 py-1 text-black bg-white textarea textarea-secondary"
               name="message"
               value={messageInput} //.replace(/  +/g, '\n') doesn't work
               onChange={(e) => setMessageInput(e.target.value)}
@@ -117,7 +117,7 @@ function Chat({ username, avatar_url, lastMessages }) {
             <div className='flex flex-row gap-1'>
 
               <input type="text"
-                className='rounded-lg w-full px-2 text-black'
+                className='w-full px-2 text-black rounded-lg'
                 value={systemInstruction}
                 onChange={handleSystemInstructionChange}
                 placeholder='System Instruction'
